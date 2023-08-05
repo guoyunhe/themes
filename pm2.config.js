@@ -3,7 +3,7 @@ const { basename } = require('path');
 module.exports = {
   apps: [
     {
-      name: basename(__dirname),
+      name: 'themes.guoyunhe.me',
       script: './build/server.js',
       instances: 'max',
       exec_mode: 'cluster',
