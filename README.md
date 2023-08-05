@@ -1,6 +1,10 @@
-# Yara
+# themes.guoyunhe.me
 
-Yara is a self-hosting Reddit alternative.
+Copyleft themes and assets for GNU/Linux desktops
+
+- [ ] Fonts
+- [ ] Icons
+- [ ] Color schemes
 
 ## Requirements
 
