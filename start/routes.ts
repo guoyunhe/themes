@@ -19,8 +19,6 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route';
-import Image from 'App/Models/Image';
-import Option from 'App/Models/Option';
 
 Route.group(() => {
   Route.get('/', async () => {
@@ -79,7 +77,6 @@ Route.group(() => {
     .middleware({ index: ['auth'], update: ['auth'], destroy: ['auth'] });
 
   Route.group(() => {
-    Route.resource('options', 'OptionsController').apiOnly();
     Route.resource('tags', 'TagsController').apiOnly();
     Route.resource('users', 'UsersController').apiOnly();
   })
@@ -90,26 +87,6 @@ Route.group(() => {
 }).prefix('/api');
 
 Route.get('*', async ({ view }) => {
-  const [siteLogo, siteName, siteDescription] = await Promise.all([
-    (async () => {
-      const option = await Option.findBy('key', 'site_logo');
-      if (option) {
-        if (typeof option.value === 'object') {
-          option.value = option.value.id;
-          await option.save();
-        }
-        return Image.find(option.value);
-      } else {
-        return null;
-      }
-    })(),
-    Option.findBy('key', 'site_name'),
-    Option.findBy('key', 'site_description'),
-  ]);
-  const html = await view.render('app', {
-    SITE_LOGO: siteLogo?.url || '/logo.svg',
-    SITE_NAME: siteName?.value || 'Yara',
-    SITE_DESCRIPTION: siteDescription?.value || 'A Yara Site',
-  });
+  const html = await view.render('app');
   return html;
 });

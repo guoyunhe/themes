@@ -4,7 +4,6 @@ import {
   Dashboard as DashboardIcon,
   Logout as LogoutIcon,
   People as PeopleIcon,
-  Settings as SettingsIcon,
 } from '@mui/icons-material';
 import {
   Divider,
@@ -62,12 +61,6 @@ export default function LeftNav({ drawerOpen, onDrawerClose }: LeftNavProps) {
             <PeopleIcon />
           </ListItemIcon>
           <ListItemText primary={t('User Management')} />
-        </ListItemButton>
-        <ListItemButton component={NavLink} to="/admin/settings">
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary={t('Site Settings')} />
         </ListItemButton>
         <ListItemButton onClick={logout.submit} disabled={logout.loading}>
           <ListItemIcon>

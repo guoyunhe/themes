@@ -25,7 +25,6 @@ const SettingsPage = lazy(() => import('./pages/settings'));
 const AdminDashboardPage = lazy(() => import('./pages/admin-dashboard'));
 const AdminTagListPage = lazy(() => import('./pages/admin-tag-list'));
 const AdminUserListPage = lazy(() => import('./pages/admin-user-list'));
-const AdminSettingsPage = lazy(() => import('./pages/admin-settings'));
 
 // error pages
 const NotFound = lazy(() => import('./pages/not-found'));
@@ -159,10 +158,6 @@ const routes: RouteObject[] = [
       {
         path: 'users',
         element: <AdminUserListPage />,
-      },
-      {
-        path: 'settings',
-        element: <AdminSettingsPage />,
       },
     ],
   },
