@@ -1,6 +1,10 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone';
+import Drive from '@ioc:Adonis/Core/Drive';
 import Font from 'App/Models/Font';
+import FontFile from 'App/Models/FontFile';
 import axios from 'axios';
+import download from 'download';
+import { basename } from 'node:path';
 
 export default class FontGoogle extends BaseCommand {
   /**
@@ -39,15 +43,21 @@ export default class FontGoogle extends BaseCommand {
       const meta2 = JSON.parse(res2.data.substring(4)); //
 
       const res3 = await axios.get(`https://fonts.google.com/download/list?family=${meta.family}`);
-      const download = JSON.parse(res3.data.substring(4));
+      const meta3 = JSON.parse(res3.data.substring(4));
 
-      console.log(download);
+      this.logger.info('Creating Font model...', meta.family);
 
-      this.logger.info('create font model', meta.family);
       const font = await Font.firstOrCreate({
         family: meta.family,
         source: 'google_fonts',
       });
+
+      if (font.$isLocal) {
+        this.logger.success('Font model created!', meta.family);
+      } else {
+        this.logger.info('Font model exists. Skipped.', meta.family);
+      }
+
       // update license
       switch (meta2?.license) {
         case 'ofl':
@@ -58,12 +68,41 @@ export default class FontGoogle extends BaseCommand {
           font.license = 'Apache-2.0';
           font.licenseUrl = 'https://www.apache.org/licenses/LICENSE-2.0';
           break;
+        case 'ufl':
+          font.license = 'UFL-1.0';
+          font.licenseUrl = 'https://ubuntu.com/legal/font-licence';
+          break;
         default:
           console.log(meta2.license);
           throw 'unknown license';
       }
+
       // update source url
       font.sourceUrl = `https://fonts.google.com/specimen/${meta.family.replaceAll(' ', '+')}`;
+
+      // download font files
+      const filenames = new Set<string>();
+      for (const fileRef of meta3.manifest.fileRefs) {
+        const filename = basename(fileRef.filename);
+        if (filenames.has(filename)) {
+          console.error(filename, 'duplicate');
+          throw '';
+        } else {
+          filenames.add(filename);
+        }
+        this.logger.info(`Downloading ${filename}`, meta.family);
+
+        const buffer = await download(fileRef.url);
+        const attr = await FontFile.parseFont(buffer);
+
+        const file = await FontFile.firstOrCreate({ fontId: font.id, filename }, attr);
+
+        if (!file.$isLocal) {
+          file.merge(attr);
+        }
+
+        Drive.put(file.path, buffer);
+      }
       await font.save();
     }
   }
