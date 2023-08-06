@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.string('family_zh').nullable().index();
       table.string('sub_family').notNullable().index();
       table.string('sub_family_zh').nullable().index();
-      table.string('version').notNullable().index();
+      table.string('version').nullable().index();
 
       table.json('fvar').nullable();
 

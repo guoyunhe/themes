@@ -73,8 +73,8 @@ export default class FontGoogle extends BaseCommand {
           font.licenseUrl = 'https://ubuntu.com/legal/font-licence';
           break;
         default:
-          console.log(meta2.license);
-          throw 'unknown license';
+          this.logger.error(`Unknown license: ${meta2.license}`);
+          throw new Error(`Unknown license: ${meta2.license}`);
       }
 
       // update source url
@@ -85,8 +85,8 @@ export default class FontGoogle extends BaseCommand {
       for (const fileRef of meta3.manifest.fileRefs) {
         const filename = basename(fileRef.filename);
         if (filenames.has(filename)) {
-          console.error(filename, 'duplicate');
-          throw '';
+          this.logger.error(`Duplicate filename: ${filename}`);
+          throw new Error(`Duplicate filename: ${filename}`);
         } else {
           filenames.add(filename);
         }

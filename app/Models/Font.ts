@@ -47,9 +47,6 @@ export default class Font extends Model {
   public licenseUrl: string | null;
 
   @column()
-  public version: string | null;
-
-  @column()
   public source: string | null;
 
   @column()

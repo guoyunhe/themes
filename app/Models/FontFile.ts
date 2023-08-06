@@ -54,7 +54,7 @@ export default class FontFile extends Model {
     const familyZh = font.names.fontFamily.zh;
     const subFamily = font.names.fontSubfamily.en;
     const subFamilyZh = font.names.fontSubfamily.zh;
-    const version = font.names.version.en.substring(8, font.names.version.en.indexOf(';'));
+    const version = font.names.version?.en?.substring(8, font.names.version.en.indexOf(';'));
     const fvar = font.tables.fvar;
     return { size, md5, family, familyZh, subFamily, subFamilyZh, version, fvar };
   }

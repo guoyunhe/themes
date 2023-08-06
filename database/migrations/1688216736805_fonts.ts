@@ -17,7 +17,6 @@ export default class extends BaseSchema {
       table.string('manufacturer_url').nullable();
       table.string('license').nullable();
       table.string('license_url').nullable();
-      table.string('version').nullable();
 
       table.string('source').nullable().index();
       table.string('source_url').nullable();
