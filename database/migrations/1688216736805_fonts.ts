@@ -19,8 +19,9 @@ export default class extends BaseSchema {
       table.string('license_url').nullable();
       table.string('version').nullable();
 
-      table.string('source_type').notNullable().index().defaultTo('upload');
-      table.json('source_config').notNullable();
+      table.string('source').nullable().index();
+      table.string('source_url').nullable();
+      table.json('source_config').nullable();
 
       table.integer('downloads').unsigned().notNullable().index().defaultTo(0);
 

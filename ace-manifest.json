@@ -1,5 +1,17 @@
 {
   "commands": {
+    "font:google": {
+      "settings": {
+        "loadApp": true,
+        "stayAlive": false
+      },
+      "commandPath": "./commands/FontGoogle",
+      "commandName": "font:google",
+      "description": "Fetch Google Fonts",
+      "args": [],
+      "aliases": [],
+      "flags": []
+    },
     "user:role": {
       "settings": {
         "loadApp": true,
