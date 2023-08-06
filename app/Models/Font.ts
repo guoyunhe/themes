@@ -8,9 +8,9 @@ import {
   hasMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm';
-import Comment from './Comment';
-import FontLike from './FontLike';
+import FontFile from './FontFile';
 import Model from './Model';
+import Review from './Review';
 import Tag from './Tag';
 import User from './User';
 
@@ -61,11 +61,18 @@ export default class Font extends Model {
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>;
 
-  @hasMany(() => Comment)
-  public comments: HasMany<typeof Comment>;
+  @hasMany(() => FontFile)
+  public files: HasMany<typeof FontFile>;
 
-  @hasMany(() => FontLike)
-  public likes: HasMany<typeof FontLike>;
+  @manyToMany(() => User, {
+    pivotTable: 'font_likes',
+  })
+  public likes: ManyToMany<typeof User>;
+
+  @manyToMany(() => Review, {
+    pivotTable: 'font_reviews',
+  })
+  public reviews: ManyToMany<typeof Review>;
 
   @manyToMany(() => Tag, {
     pivotTable: 'font_tags',
@@ -75,5 +82,10 @@ export default class Font extends Model {
   @computed()
   public get likesCount(): number | null {
     return this.$extras.likes_count;
+  }
+
+  @computed()
+  public get rating(): number | null {
+    return this.$extras.rating;
   }
 }
