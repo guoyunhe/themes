@@ -11,6 +11,7 @@ export default class extends BaseSchema {
 
       table.string('slug').notNullable().unique();
       table.string('name').notNullable().unique();
+      table.string('name_zh').nullable();
 
       table.timestamp('created_at').notNullable().defaultTo(this.raw('CURRENT_TIMESTAMP'));
       table.timestamp('updated_at').notNullable().defaultTo(this.raw('CURRENT_TIMESTAMP'));

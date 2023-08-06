@@ -21,6 +21,9 @@ export default class Tag extends Model {
   @column()
   public name: string;
 
+  @column()
+  public nameZh: string;
+
   @belongsTo(() => Image, { foreignKey: 'iconId' })
   public icon: BelongsTo<typeof Image>;
 
