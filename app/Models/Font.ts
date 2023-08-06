@@ -73,11 +73,6 @@ export default class Font extends Model {
   public tags: ManyToMany<typeof Tag>;
 
   @computed()
-  public get commentsCount(): number | null {
-    return this.$extras.comments_count;
-  }
-
-  @computed()
   public get likesCount(): number | null {
     return this.$extras.likes_count;
   }
