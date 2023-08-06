@@ -68,7 +68,7 @@ export default class Font extends Model {
   public likes: HasMany<typeof FontLike>;
 
   @manyToMany(() => Tag, {
-    pivotTable: 'post_tags',
+    pivotTable: 'font_tags',
   })
   public tags: ManyToMany<typeof Tag>;
 
