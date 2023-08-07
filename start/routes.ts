@@ -18,6 +18,7 @@
 |
 */
 
+import Env from '@ioc:Adonis/Core/Env';
 import Route from '@ioc:Adonis/Core/Route';
 
 Route.group(() => {
@@ -87,6 +88,11 @@ Route.group(() => {
 }).prefix('/api');
 
 Route.get('*', async ({ view }) => {
-  const html = await view.render('app');
+  const html = await view.render('app', {
+    SITE_NAME: Env.get('SITE_NAME'),
+    SITE_LOGO: Env.get('SITE_LOGO'),
+    SITE_DESCRIPTION: Env.get('SITE_DESCRIPTION'),
+    SITE_URL: Env.get('SITE_URL'),
+  });
   return html;
 });

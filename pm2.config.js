@@ -1,9 +1,7 @@
-const { basename } = require('path');
-
 module.exports = {
   apps: [
     {
-      name: 'themes.guoyunhe.me',
+      name: 'linuxporn',
       script: './build/server.js',
       instances: 'max',
       exec_mode: 'cluster',
