@@ -43,6 +43,13 @@ Route.group(() => {
     });
 
   Route.resource('tags', 'TagsController').only(['index', 'show']);
+  Route.resource('fonts', 'FontsController')
+    .apiOnly()
+    .middleware({
+      store: ['auth'],
+      update: ['auth'],
+      destroy: ['auth'],
+    });
   Route.resource('posts', 'PostsController')
     .apiOnly()
     .middleware({

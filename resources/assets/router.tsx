@@ -1,6 +1,7 @@
 import { RequireAuth } from '@guoyunhe/react-auth';
 import { lazy } from 'react';
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import FontListPage from './pages/font-list';
 import HomePage from './pages/home';
 import NotificationsPage from './pages/notifications';
 import PostPage from './pages/post';
@@ -64,6 +65,10 @@ const routes: RouteObject[] = [
             element: <PostPage />,
           },
         ],
+      },
+      {
+        path: 'fonts',
+        element: <FontListPage />,
       },
       {
         path: 'submit',
