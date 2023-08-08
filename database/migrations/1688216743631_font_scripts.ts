@@ -7,11 +7,18 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id');
 
-      table.integer('font_id').unsigned().nullable().references('fonts.id').onDelete('CASCADE');
+      table
+        .integer('font_file_id')
+        .unsigned()
+        .nullable()
+        .references('font_files.id')
+        .onDelete('CASCADE');
+
+      table.integer('image_id').unsigned().nullable().references('images.id').onDelete('CASCADE');
 
       table.string('tag').notNullable().index();
 
-      table.unique(['font_id', 'tag']);
+      table.unique(['font_file_id', 'tag']);
 
       table.json('script').nullable();
 
