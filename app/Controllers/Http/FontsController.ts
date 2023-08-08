@@ -25,6 +25,9 @@ export default class FontsController {
 
     const query = Font.query()
       .preload('user')
+      .preload('files', (q) => {
+        q.preload('langs');
+      })
       .preload('tags', (q) => {
         q.preload('icon');
       })

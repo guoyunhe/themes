@@ -2,6 +2,7 @@ import { BaseCommand } from '@adonisjs/core/build/standalone';
 import Drive from '@ioc:Adonis/Core/Drive';
 import Font from 'App/Models/Font';
 import FontFile from 'App/Models/FontFile';
+import FontLang from 'App/Models/FontLang';
 import axios from 'axios';
 import download from 'download';
 import { basename } from 'node:path';
@@ -93,12 +94,23 @@ export default class FontGoogle extends BaseCommand {
         this.logger.info(`Downloading ${filename}`, meta.family);
 
         const buffer = await download(fileRef.url);
-        const attr = await FontFile.parseFont(buffer);
+        const { langs, ...attr } = await FontFile.parseFont(buffer);
 
         const file = await FontFile.firstOrCreate({ fontId: font.id, filename }, attr);
 
         if (!file.$isLocal) {
           file.merge(attr);
+        }
+
+        for (const langRaw of langs) {
+          const script = await FontLang.firstOrCreate({
+            fontFileId: file.id,
+            lang: langRaw.lang,
+          });
+
+          script.preview = langRaw.preview;
+
+          await script.save();
         }
 
         Drive.put(file.path, buffer);

@@ -1,7 +1,7 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema';
 
 export default class extends BaseSchema {
-  protected tableName = 'font_scripts';
+  protected tableName = 'font_langs';
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -10,17 +10,15 @@ export default class extends BaseSchema {
       table
         .integer('font_file_id')
         .unsigned()
-        .nullable()
+        .notNullable()
         .references('font_files.id')
         .onDelete('CASCADE');
 
-      table.integer('image_id').unsigned().nullable().references('images.id').onDelete('CASCADE');
+      table.string('lang').notNullable().index();
 
-      table.string('tag').notNullable().index();
+      table.unique(['font_file_id', 'lang']);
 
-      table.unique(['font_file_id', 'tag']);
-
-      table.json('script').nullable();
+      table.text('preview', 'longtext').nullable();
 
       table.timestamp('created_at').notNullable().defaultTo(this.raw('CURRENT_TIMESTAMP'));
       table.timestamp('updated_at').notNullable().defaultTo(this.raw('CURRENT_TIMESTAMP'));

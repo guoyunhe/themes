@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id');
 
-      table.integer('font_id').unsigned().nullable().references('fonts.id').onDelete('CASCADE');
+      table.integer('font_id').unsigned().notNullable().references('fonts.id').onDelete('CASCADE');
 
       table.string('family').notNullable().index();
       table.string('family_zh').nullable().index();

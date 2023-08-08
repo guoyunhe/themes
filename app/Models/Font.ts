@@ -9,7 +9,6 @@ import {
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm';
 import FontFile from './FontFile';
-import FontScript from './FontScript';
 import Model from './Model';
 import Review from './Review';
 import Tag from './Tag';
@@ -64,9 +63,6 @@ export default class Font extends Model {
 
   @hasMany(() => FontFile)
   public files: HasMany<typeof FontFile>;
-
-  @hasMany(() => FontScript)
-  public scripts: HasMany<typeof FontScript>;
 
   @manyToMany(() => User, {
     pivotTable: 'font_likes',

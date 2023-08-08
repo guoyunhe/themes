@@ -1,4 +1,5 @@
 import Comment from './Comment';
+import FontFile from './FontFile';
 import Like from './Like';
 import Model from './Model';
 import Tag from './Tag';
@@ -15,4 +16,5 @@ export default interface Font extends Model {
   commentsCount: number;
   likesSum: number;
   likes?: Like[];
+  files: FontFile[];
 }
