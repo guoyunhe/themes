@@ -39,7 +39,7 @@ export default class FontFile extends Model {
 
   @computed()
   public get path(): string {
-    return `fonts/${this.id}/${this.filename}`;
+    return `fonts/${this.fontId}/${this.filename}`;
   }
 
   @computed()
