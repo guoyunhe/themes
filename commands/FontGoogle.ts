@@ -91,6 +91,11 @@ export default class FontGoogle extends BaseCommand {
         } else {
           filenames.add(filename);
         }
+        // skip existing font files
+        if (await FontFile.findBy('filename', filename)) {
+          this.logger.info(`${filename} exists. Skipping...`, meta.family);
+          continue;
+        }
         this.logger.info(`Downloading ${filename}`, meta.family);
 
         const buffer = await download(fileRef.url);
